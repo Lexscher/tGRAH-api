@@ -1,6 +1,6 @@
 # tGRAH-api
 
-This is the backend for our app, [tGRAH](#).
+This is the backend for our app, [tGRAH](https://github.com/RichieCoding/tGRAH-front-end/).
 
 - `ruby version 6.2.3`
 
