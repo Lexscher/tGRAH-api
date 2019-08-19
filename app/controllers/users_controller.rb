@@ -2,36 +2,51 @@ class UsersController < ApplicationController
   attr_accessor :passsword
 
   def index 
+    # find all users
     @users = User.all
+    # Render those users
     render json: @users
   end
 
   def show
-    @user = User.find(params[:id])
-    # byebug
-    render json: @user
+    user_id = params[:id]
+    if authorized?(user_id) # see application_controller.rb
+      user = User.find(user_id)
+      render json: user
+    else
+      notify_unauthorized_user # see application_controller.rb
+    end
   end
   
   def create 
     get_user_params
-    # byebug
+    # create a new user
     @user = User.create(@user_params)
+    # if it persists
     if @user.valid?
-      render json: { user: UserSerializer.new(@user) }, status: :created
+      byebug
+      # render that user
+      render json: auth_response_json(@user), status: :created
     else
+      # Or let the user know why it didn't save.
       render json: { error: @user.errors.full_messages }, status: :not_acceptable
     end
   end
   
+  # Take the plain text password
   def authenticate(plaintext_passwprd)
+    # Encript the password
     if BCrypt::Password.new(self.password_digest) == plaintext_passwprd
+      # Return the encrypted password
       self 
     else
+      # OR return false
       false
     end
   end
 
   private
+  # Get the user information from the params we get from the client side.
   def get_user_params
     params.permit(:name, :username, :email, :password)
     @user_params = { name: params[:name], username: params[:username], email: params[:email], password: params[:password]}
