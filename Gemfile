@@ -51,3 +51,5 @@ gem "active_model_serializers", "~> 0.10.10"
 gem "faker", "~> 2.1"
 
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+
+gem 'fast_jsonapi'
