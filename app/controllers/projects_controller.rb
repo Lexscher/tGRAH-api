@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     # Find one project
     @project = Project.find(params[:id])
     # Render one project
-    render json: @project
+    render json: ProjectSerializer.new(@project)
   end
 
   def create
@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
     # If the project is valid
     if @project.valid?
       # Return that project
-      render json: @project
+      render json: ProjectSerializer.new(@project)
     else
       # Give the user error messages
       render json: { errors: @project.errors.full_messages }, status: :not_acceptable
