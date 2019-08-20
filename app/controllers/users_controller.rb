@@ -5,14 +5,14 @@ class UsersController < ApplicationController
     # find all users
     @users = User.all
     # Render those users
-    render json: @users
+    render json: UserSerializer.new(@users)
   end
 
   def show
     user_id = params[:id]
     if authorized?(user_id) # see application_controller.rb
       user = User.find(user_id)
-      render json: user
+      render json: UserSerializer(user)
     else
       notify_unauthorized_user # see application_controller.rb
     end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user = User.create(@user_params)
     # if it persists
     if @user.valid?
-      byebug
+      # byebug
       # render that user
       render json: auth_response_json(@user), status: :created
     else
