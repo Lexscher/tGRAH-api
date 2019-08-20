@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     user_id = params[:id]
     if authorized?(user_id) # see application_controller.rb
       user = User.find(user_id)
-      render json: UserSerializer(user)
+      render json: UserSerializer.new(user)
     else
       notify_unauthorized_user # see application_controller.rb
     end
