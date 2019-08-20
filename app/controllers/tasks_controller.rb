@@ -10,7 +10,7 @@ class TasksController < ApplicationController
     # Find one task
     @task = Task.find(params[:id])
     # Render one task
-    render json: @task
+    render json: TaskSerializer.new(@task)
   end
 
   def create
@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     # If the task is valid
     if @task.valid?
       # Return that task
-      render json: @task
+      render json: TaskSerializer.new(@task)
     else
       # Give the user error messages
       render json: { errors: @task.errors.full_messages }, status: :not_acceptable

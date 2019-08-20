@@ -1,8 +1,7 @@
-class ListSerializer < ActiveModel::Serializer
+class ListSerializer
   include FastJsonapi::ObjectSerializer
   attributes :name, :project_id
-
-  attributes :project do |list|
-    list.project.name
+  attribute :task do |list|
+    list.tasks
   end
 end
