@@ -11,7 +11,7 @@ class ListsController < ApplicationController
     # Find one list
     @list = List.find(params[:id])
     # Render one list
-    render json: @list
+    render json: ListSerializer.new(@list)
   end
 
   def create
@@ -20,7 +20,7 @@ class ListsController < ApplicationController
     # If the list is valid
     if @list.valid?
       # Return that list
-      render json: @list
+      render json: ListSerializer.new(@list)
     else
       # Give the user error messages
       render json: { errors: @list.errors.full_messages }, status: :not_acceptable
